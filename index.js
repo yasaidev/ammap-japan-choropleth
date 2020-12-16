@@ -31,10 +31,9 @@ polygonTemplate.fill = am4core.color("#999");
 // Add heat rule
 JapanSeries.heatRules.push({
     "property": "fill",
-    "target": JapanSeries.mapPolygons.template,
+    "target": polygonTemplate,
     "min": am4core.color("#bfe9ff"),
     "max": am4core.color("#ff6e7f"),
-    "logarithmic": true
 });
 
 // Set Map Center to Kyoto
@@ -43,7 +42,7 @@ map.homeZoomLevel = 8;
 
 
 
-// Map Overlay
+// Map Overlay start ------------------------------------------------------------
 let KyotoSeries = map.series.push(new am4maps.MapPolygonSeries())
 KyotoSeries.geodataSource.url = "./map_data/kyoto.json"
 KyotoSeries.reverseGeodata = true;
@@ -52,25 +51,22 @@ KyotoTemplate.fill = am4core.color("#999");
 
 KyotoTemplate.tooltipText = "{name}:{value}";
 let pref_hs = KyotoTemplate.states.create("hover");
-
-
 pref_hs.properties.fill = am4core.color("#F99F48");
-KyotoSeries.data = [
-    { id: "京都府京都市", value: 15 }
-]
+
 
 // Add heat rule
 KyotoSeries.heatRules.push({
     "property": "fill",
-    "target": KyotoSeries.mapPolygons.template,
+    "target": KyotoTemplate,
     "min": am4core.color("#bfe9ff"),
     "max": am4core.color("#ff6e7f"),
-    "logarithmic": true
 });
+
+// map overlay end----------------------------------------------------------
 
 // Set up heat legend
 let japanheatmap = map.createChild(am4maps.HeatLegend);
-japanheatmap.series = JapanSeries, KyotoSeries;
+japanheatmap.series = JapanSeries;
 japanheatmap.align = "right";
 japanheatmap.valign = "bottom";
 japanheatmap.height = am4core.percent(80);
@@ -82,8 +78,6 @@ japanheatmap.valueAxis.renderer.dx = - 25;
 japanheatmap.valueAxis.strictMinMax = false;
 japanheatmap.valueAxis.fontSize = 9;
 japanheatmap.valueAxis.logarithmic = true;
-
-
 
 // Data like Json object
 JapanSeries.data = [
@@ -136,3 +130,31 @@ JapanSeries.data = [
     { id: "沖縄県", value: 14 },
 ];
 
+KyotoSeries.data = [
+    { id: "京都府京都市", value: 5 },
+    { id: "京都府福知山市", value: 14 },
+    { id: "京都府舞鶴市", value: 42 },
+    { id: "京都府綾部市", value: 6 },
+    { id: "京都府宇治市", value: 49 },
+    { id: "京都府宮津市", value: 10 },
+    { id: "京都府亀岡市", value: 43 },
+    { id: "京都府城陽市", value: 59 },
+    { id: "京都府向日市", value: 23 },
+    { id: "京都府長岡京市", value: 76 },
+    { id: "京都府八幡市", value: 82 },
+    { id: "京都府京田辺市", value: 42 },
+    { id: "京都府京丹後市", value: 22 },
+    { id: "京都府南丹市", value: 27 },
+    { id: "京都府木津川市", value: 80 },
+    { id: "京都府乙訓郡大山崎町", value: 0 },
+    { id: "京都府久世郡久御山町", value: 53 },
+    { id: "京都府綴喜郡井手町", value: 83 },
+    { id: "京都府綴喜郡宇治田原町", value: 10 },
+    { id: "京都府相楽郡笠置町", value: 90 },
+    { id: "京都府相楽郡和束町", value: 31 },
+    { id: "京都府相楽郡精華町", value: 18 },
+    { id: "京都府相楽郡南山城村", value: 30 },
+    { id: "京都府船井郡京丹波町", value: 12 },
+    { id: "京都府与謝郡伊根町", value: 33 },
+    { id: "京都府与謝郡与謝野町", value: 61 },
+]
