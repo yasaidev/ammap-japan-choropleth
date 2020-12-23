@@ -17,7 +17,7 @@ npm run build
 
 ## Develop
 
-Dev用のサーバが立ち上げ
+Dev用のサーバを起動
 
 ```
 npm run serve
