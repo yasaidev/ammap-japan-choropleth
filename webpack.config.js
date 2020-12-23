@@ -9,7 +9,7 @@ module.exports = {
     devtool: "source-map",
 
     entry: {
-        index: "./src/js/index.js"
+        index: "./src/index.js"
     },
 
     output: {
