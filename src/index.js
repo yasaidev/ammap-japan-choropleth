@@ -198,5 +198,20 @@ JapanSeries.mapPolygons.template.events.on("ready", function (ev) {
     }
 });
 
+// ホームボタンの追加
+// https://www.amcharts.com/docs/v4/tutorials/adding-home-button-to-map-chart/
+const button = map.chartContainer.createChild(am4core.Button);
+button.padding(5, 5, 5, 5);
+button.align = "right";
+button.valign = "bottom";
+button.marginRight = 35;
+button.events.on("hit", function () {
+    reset_map()
+    map.goHome();
+});
+
+button.icon = new am4core.Sprite();
+button.icon.path = "M16,8 L14,8 L14,16 L10,16 L10,10 L6,10 L6,16 L2,16 L2,8 L0,8 L8,0 L16,8 Z M16,8";
+
 
 
