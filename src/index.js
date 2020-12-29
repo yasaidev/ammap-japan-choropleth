@@ -154,8 +154,8 @@ function onoff_zoompan(input, constZoomLevel = 18) {
         map.minZoomLevel = 1;
 
     } else {
-        // map.seriesContainer.draggable = false;
-        // map.seriesContainer.resizable = false;
+        map.seriesContainer.draggable = false;
+        map.seriesContainer.resizable = false;
         map.maxZoomLevel = constZoomLevel;
         map.minZoomLevel = constZoomLevel;
         // 以下のコードは公式推奨だが，バグる
