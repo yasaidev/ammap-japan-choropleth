@@ -55,14 +55,13 @@ JapanSeries.dataSource.url = "./assets/mockup_data/japan_data.json"
 // ドリルマップ: https://www.amcharts.com/docs/v4/tutorials/building-drill-down-maps/
 let CitySeries = map.series.push(new am4maps.MapPolygonSeries());
 CitySeries.useGeodata = true;
-CitySeries.reverseGeodata = true;
 CitySeries.hide();
 
 // 市町村別地図: ポリゴン設定
 let CityPolygon = CitySeries.mapPolygons.template;
 
 // 市町村別地図: ツールチップ
-CityPolygon.tooltipText = "{name}: {value}";
+CityPolygon.tooltipText = "{id}: {value}";
 CityPolygon.fill = am4core.color("#74B266");
 
 // 市町村別地図: ホバー
@@ -101,8 +100,8 @@ CitySeries.geodataSource.events.on("done", function (ev) {
 
 // 市町村別地図: 地図・配送データの動的読み込みのためのイベントを日本地図側に設定
 JapanPolygon.events.on("hit", function (ev) {
-    map.zoomToMapObject(ev.target, 18, true, 10);
-    onoff_zoompan(false, 18);
+    map.zoomToMapObject(ev.target, 20, true, 10);
+    onoff_zoompan(false, 20);
 
     let pref_name = ev.target.dataItem.dataContext.name;
     if (pref_name) {
@@ -171,27 +170,33 @@ function reset_map() {
     onoff_zoompan(true);
     JapanSeries.show();
     JapanHeatLegend.show();
-    map.goHome();
+    map.goHome(500);
     CitySeries.hide();
     CityHeatLegend.hide();
     back.hide();
 }
 
 // マップの表示初期位置の設定
-// TODO: ユーザ位置情報から決定する
-// 
 JapanSeries.mapPolygons.template.events.on("ready", function (ev) {
-    map.zoomToMapObject(JapanSeries.getPolygonById("京都府"), 8, true);
-    // homeの設定
-    map.homeGeoPoint = {
+    let userlocation = {
         latitude: JapanSeries.getPolygonById("京都府").visualLatitude,
         longitude: JapanSeries.getPolygonById("京都府").visualLongitude
     };
+    map.homeGeoPoint = userlocation
     map.homeZoomLevel = 8;
+    map.goHome(500);
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (postion) => {
+                userlocation.latitude = postion.coords.latitude;
+                userlocation.longitude = postion.coords.longitude;
+                map.homeGeoPoint = userlocation
+                map.homeZoomLevel = 8;
+                map.goHome(500);
+            })
+    }
 });
-
-
-
 
 
 
