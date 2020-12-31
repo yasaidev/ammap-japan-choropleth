@@ -16,13 +16,21 @@ for geojson_path in glob.glob(GEOJSON_PATH+"*.json"):
 
     for feature in geojson["features"]:
         print(feature["id"])
-        regex = r"(?<=都|道|府|県|郡).*[市|町|村|区]"
+        if("京都府" in feature["id"]):
+            regex = r"(?<=府|郡).*[市|町|村|区]"
+        else:
+            regex = r"(?<=都|道|府|県|郡).*[市|町|村|区]"
+
         try:
             first_regexed = re.findall(regex, feature["id"])[0]
         except:
             first_regexed = feature["id"]
-
-        secound_regexed = re.findall(regex, first_regexed)
+        
+        try:
+            secound_regexed = re.findall(regex, first_regexed)
+        except:
+            secound_regexed = 0
+        
         shrot_name = secound_regexed[0] if bool(
             secound_regexed) else first_regexed
         print(shrot_name)
