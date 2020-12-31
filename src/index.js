@@ -114,6 +114,14 @@ JapanPolygon.events.on("hit", function (ev) {
         // TODO: 環境変数にする，本番はAPIエンドポイントに変えるだけ？
         CitySeries.dataSource.url = "./assets/mockup_data/" + pref_name + ".json";
         CitySeries.dataSource.load();
+        CitySeries.dataSource.events.on("error", function (ev) {
+            // デフォルトのエラーモーダルを閉じる
+            map.modal.close();
+            // 日本語のエラーを表示
+            map.openModal(`${pref_name}の詳細データが読み込めませんでした．`, "エラー");
+            // 以前のデータを削除
+            CitySeries.data.length = 0;
+        });
         back.show();
     }
 });
