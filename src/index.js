@@ -61,7 +61,7 @@ CitySeries.hide();
 let CityPolygon = CitySeries.mapPolygons.template;
 
 // 市町村別地図: ツールチップ
-CityPolygon.tooltipText = "{id}: {value}";
+CityPolygon.tooltipText = "{name}: {value}";
 CityPolygon.fill = am4core.color("#74B266");
 
 // 市町村別地図: ホバー
@@ -101,7 +101,7 @@ CitySeries.geodataSource.events.on("done", function (ev) {
 // 市町村別地図: 地図・配送データの動的読み込みのためのイベントを日本地図側に設定
 JapanPolygon.events.on("hit", function (ev) {
     map.zoomToMapObject(ev.target, 20, true, 10);
-    onoff_zoompan(false, 20);
+    // onoff_zoompan(false, 20);
 
     let pref_name = ev.target.dataItem.dataContext.name;
     if (pref_name) {
@@ -175,7 +175,7 @@ function onoff_zoompan(input, constZoomLevel = 18) {
  * マップを日本地図表示に戻す．
  */
 function reset_map() {
-    onoff_zoompan(true);
+    // onoff_zoompan(true);
     JapanSeries.show();
     JapanHeatLegend.show();
     map.goHome(500);
