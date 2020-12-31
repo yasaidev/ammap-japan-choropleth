@@ -118,7 +118,7 @@ JapanPolygon.events.on("hit", function (ev) {
             // デフォルトのエラーモーダルを閉じる
             map.modal.close();
             // 日本語のエラーを表示
-            map.openModal(`${pref_name}の詳細データが読み込めませんでした．`, "エラー");
+            map.openModal(`エラー: ${pref_name}の詳細データが読み込めませんでした．`, "エラー");
             // 以前のデータを削除
             CitySeries.data.length = 0;
         });
