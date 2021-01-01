@@ -100,10 +100,22 @@ CitySeries.geodataSource.events.on("done", function (ev) {
 
 // 市町村別地図: 地図・配送データの動的読み込みのためのイベントを日本地図側に設定
 JapanPolygon.events.on("hit", function (ev) {
-    map.zoomToMapObject(ev.target, 20, true, 10);
+    let pref_name = ev.target.dataItem.dataContext.name;
+    let virtual_lati = ev.target.dataItem.dataContext.virtual_lati;
+    let virtual_long = ev.target.dataItem.dataContext.virtual_long;
+
+    if (virtual_lati !== undefined) {
+        console.log(virtual_lati);
+        map.zoomToGeoPoint({
+            latitude: virtual_lati,
+            longitude: virtual_long
+        }, 20, true)
+    }
+    else {
+        map.zoomToMapObject(ev.target);
+    }
     // onoff_zoompan(false, 20);
 
-    let pref_name = ev.target.dataItem.dataContext.name;
     if (pref_name) {
         ev.target.isHover = false;
         // 市町村別地図: 地図データ読み込み
