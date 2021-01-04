@@ -1,5 +1,6 @@
 import "core-js/stable";
 import "regenerator-runtime/runtime";
+import userEnv from 'userEnv';
 import * as am4core from "@amcharts/amcharts4/core"
 import * as am4maps from "@amcharts/amcharts4/maps"
 
@@ -47,9 +48,8 @@ JapanHeatLegend.valueAxis.strictMinMax = false;
 JapanHeatLegend.valueAxis.fontSize = 9;
 JapanHeatLegend.valueAxis.logarithmic = true;
 
-// 日本地図: 配送量データ読み込み(モック)
-// TODO: 環境変数にする，本番はAPIエンドポイントに変えるだけ？
-JapanSeries.dataSource.url = "./assets/mockup_data/japan_data.json"
+// 日本地図: 配送量データ読み込み
+JapanSeries.dataSource.url = get_api_url("japan_data");
 
 // 市町村別地図: 読み込み・設定
 // ドリルマップ: https://www.amcharts.com/docs/v4/tutorials/building-drill-down-maps/
@@ -122,9 +122,8 @@ JapanPolygon.events.on("hit", function (ev) {
         CitySeries.geodataSource.url = "./assets/map_data/" + pref_name + ".json";
         CitySeries.geodataSource.load();
 
-        // 市町村別地図: 配送量データ読み込み(モック)
-        // TODO: 環境変数にする，本番はAPIエンドポイントに変えるだけ？
-        CitySeries.dataSource.url = "./assets/mockup_data/" + pref_name + ".json";
+        // 市町村別地図: 配送量データ読み込み
+        CitySeries.dataSource.url = get_api_url(pref_name)
         CitySeries.dataSource.load();
         CitySeries.dataSource.events.on("error", function (ev) {
             // デフォルトのエラーモーダルを閉じる
@@ -194,6 +193,21 @@ function reset_map() {
     CitySeries.hide();
     CityHeatLegend.hide();
     back.hide();
+}
+
+/**
+ * MODEに応じてAPIアクセス用のURLを返します．
+ * @param {string} query クエリ文字列
+ * @return {string} クエリを含んだAPIアクセス用のurl
+ */
+function get_api_url(query) {
+    let api_url;
+    if (userEnv.MODE === "dev") {
+        api_url = userEnv.API_ENDPOINT + query + ".json";
+    } else {
+        api_url = userEnv.API_ENDPOINT + "?q=" + query;
+    }
+    return api_url;
 }
 
 // マップの表示初期位置の設定

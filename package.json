@@ -8,6 +8,7 @@
         "@babel/preset-env": "^7.4.4",
         "babel-loader": "^8.0.5",
         "copy-webpack-plugin": "^6.2.1",
+        "cross-env": "^7.0.3",
         "html-webpack-plugin": "^4.5.0",
         "source-map-loader": "0.2.3",
         "webpack": "^4.6.0",
@@ -16,8 +17,10 @@
         "write-file-webpack-plugin": "^4.5.1"
     },
     "scripts": {
-        "build": "webpack",
-        "serve": "webpack-dev-server --mode development"
+        "build": "cross-env NODE_ENV=prd webpack",
+        "build:dev": "cross-env NODE_ENV=dev webpack",
+        "serve": "cross-env NODE_ENV=dev webpack-dev-server --mode development",
+        "serve:prd": "cross-env NODE_ENV=prd webpack-dev-server --mode development"
     },
     "dependencies": {
         "@amcharts/amcharts4-geodata": "^4.1.19",

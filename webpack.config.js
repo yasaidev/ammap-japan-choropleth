@@ -1,10 +1,17 @@
-var $path = require("path");
+const path = require("path");
+const environment = process.env.NODE_ENV || 'dev';
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyFilePlugin = require("copy-webpack-plugin");
 const WriteFilePlugin = require("write-file-webpack-plugin");
 
 module.exports = {
     mode: "production",
+
+    resolve: {
+        alias: {
+            userEnv$: path.resolve(__dirname, `.env/${environment}.js`),
+        },
+    },
 
     devtool: "source-map",
 
@@ -13,7 +20,7 @@ module.exports = {
     },
 
     output: {
-        path: $path.join(__dirname, "dist"),
+        path: path.join(__dirname, "dist"),
         filename: "[name].js",
         chunkFilename: "[name].js"
     },
@@ -37,7 +44,7 @@ module.exports = {
     },
 
     devServer: {
-        contentBase: $path.join(__dirname, "dist")
+        contentBase: path.join(__dirname, "dist")
     },
 
     plugins: [
