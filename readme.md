@@ -119,7 +119,7 @@ npm run serve:prd
 
 ### Tools
 
-[使用したスクリプト集](./tool/readme.md)
+[使用したスクリプト集](./tool/)
 
 ### 境界データ(topojson)の入手
 
