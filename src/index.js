@@ -159,6 +159,43 @@ map.backgroundSeries.events.on("hit", function (ev) {
     }
 });
 
+// マップの表示初期位置の設定
+JapanSeries.mapPolygons.template.events.on("ready", function (ev) {
+    let userlocation = {
+        latitude: JapanSeries.getPolygonById("京都府").visualLatitude,
+        longitude: JapanSeries.getPolygonById("京都府").visualLongitude
+    };
+    map.homeGeoPoint = userlocation
+    map.homeZoomLevel = 8;
+    map.goHome(500);
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (postion) => {
+                userlocation.latitude = postion.coords.latitude;
+                userlocation.longitude = postion.coords.longitude;
+                map.homeGeoPoint = userlocation
+                map.homeZoomLevel = 8;
+                map.goHome(500);
+            })
+    }
+});
+
+// ホームボタンの追加
+// https://www.amcharts.com/docs/v4/tutorials/adding-home-button-to-map-chart/
+const button = map.chartContainer.createChild(am4core.Button);
+button.padding(5, 5, 5, 5);
+button.align = "right";
+button.valign = "bottom";
+button.marginRight = 35;
+button.events.on("hit", function () {
+    reset_map()
+    map.goHome();
+});
+
+button.icon = new am4core.Sprite();
+button.icon.path = "M16,8 L14,8 L14,16 L10,16 L10,10 L6,10 L6,16 L2,16 L2,8 L0,8 L8,0 L16,8 Z M16,8";
+
 /**
  * ZoomとPanをinputに応じて有効/無効化する．
  * ズーム時のpan/zoomの無効化: https://www.amcharts.com/docs/v4/tutorials/disabling-zoom-and-pan-on-a-map-chart/
@@ -209,43 +246,4 @@ function get_api_url(query) {
     }
     return api_url;
 }
-
-// マップの表示初期位置の設定
-JapanSeries.mapPolygons.template.events.on("ready", function (ev) {
-    let userlocation = {
-        latitude: JapanSeries.getPolygonById("京都府").visualLatitude,
-        longitude: JapanSeries.getPolygonById("京都府").visualLongitude
-    };
-    map.homeGeoPoint = userlocation
-    map.homeZoomLevel = 8;
-    map.goHome(500);
-
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            (postion) => {
-                userlocation.latitude = postion.coords.latitude;
-                userlocation.longitude = postion.coords.longitude;
-                map.homeGeoPoint = userlocation
-                map.homeZoomLevel = 8;
-                map.goHome(500);
-            })
-    }
-});
-
-// ホームボタンの追加
-// https://www.amcharts.com/docs/v4/tutorials/adding-home-button-to-map-chart/
-const button = map.chartContainer.createChild(am4core.Button);
-button.padding(5, 5, 5, 5);
-button.align = "right";
-button.valign = "bottom";
-button.marginRight = 35;
-button.events.on("hit", function () {
-    reset_map()
-    map.goHome();
-});
-
-button.icon = new am4core.Sprite();
-button.icon.path = "M16,8 L14,8 L14,16 L10,16 L10,10 L6,10 L6,16 L2,16 L2,8 L0,8 L8,0 L16,8 Z M16,8";
-
-
 
