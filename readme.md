@@ -30,13 +30,9 @@ git clone https://github.com/older4/ammap-testing.git
 npm install
 ```
 
-### Develop Mode
-
-**動的に数値を変更する必要がない場合**はモックアップデータのJsonを書き換えることで任意のデータで色付けする静的ページを作成できる．
+### Develop
 
 環境変数として[`./env/dev.js`](./.env/dev.js)を読み込む．
-
-[`./assets/mockup_data/`](./src/assets/mockup_data)を`API_ENDPOINT`としてモックアップデータを参照して，コロプレス図を色づけている．
 
 #### Build:dev
 
@@ -54,31 +50,136 @@ Dev用のwebpack-dev-serverを起動
 npm run serve
 ```
 
-### Production Mode
-
-**動的に数値を変更して色付けを行う場合**に使う．サーバにJSONを返すエンドポイントを設けることで，フロントエンドとバックエンドを分離して利用可能である．
+### Production
 
 環境変数として`./env/prd.js`を読み込む．(git追跡対象外)
 
-EX:`prd.js`
+EX: `prd.js`
 
 ```js
 export default {
-    MODE: "prd",
+    MODE: "dynamic_noparam",
     API_ENDPOINT: "http://example.com/api/"
 }
 ```
 
-与えられた`API_ENDPOINT`に以下のURLの書式でJsonをGETする．
+#### Build:prd
+
+`./dist`以下にビルド
+
+```bash
+npm run build
+```
+
+#### Serve:prd
+
+Production用のenvを読み込んだwebpack-dev-serverを起動
+
+```bash
+npm run serve:prd
+```
+
+### 任意のページに埋め込む方法
+
+1. 任意のモードやエンドポイントを設定した`./.env/prd.js`を用意
+2. `npm run build`
+3. `./dist/`以下のファイルをすべてサーバにアップロード
+   > `index.html`は確認用のページなどで不要であれば消して良い．
+   > ここでは例として，`http://example.com/heatmap/`以下にアップロードとしたとする．
+   >
+4. 対象のページに以下を追加する
+
+EX: target.html
+
+```html
+<!DOCTYPE html>
+<html>
+<body>
+    <!-- #################### insert start ################## -->
+    <div id="chartdiv" data-paramid="XXXXXXX">
+    <script src="index.js"></script>
+    <!-- #################### insert end ################## -->
+</body>
+</html>
+```
+
+`id="chartdiv"`の`div`要素にマップが表示される．また，`data-paramid`属性に`dynamic_param`モードで使うIDを設定する．
+
+### Mode
+
+#### 静的JSON参照(static)
+
+`Mode: "static"`とenv用のjsファイルで定義することで，API_ENDPOINTに応じた静的JSONを参照して可視化する．
+
+EX: `./dev.js`
+
+```js
+export default {
+    MODE: "static",
+    API_ENDPOINT: "http://example.com/data/"
+}
+```
+
+`http://example.com/data/`を`API_ENDPOINT`としてJSONを参照して，コロプレス図を色づけている．
+
+参照するURLの形式は以下になる．
+
+- 日本全体: <http://example.com/data/japan_data.json>
+- 各都道府県: <http://example.com/data/京都府.json>
+
+#### API経由(dynamic_noparam)
+
+`Mode: "dynamic_noparam"`とenv用のjsファイルで定義することで，JSONを返すAPI_ENDPOINTに応じたクエリを含むURLを参照して可視化する．
+このモードではパラメータ（商品ID等）を含めてapiに情報を渡すことはできない．
+
+EX: `./dev.js`
+
+```js
+export default {
+    MODE: "dynamic_noparam",
+    API_ENDPOINT: "http://example.com/api/"
+}
+```
+
+参照するURLの形式は以下になる．
 
 - 日本全体: <http://example.com/api/?q=japan_data>
 - 京都府市町村単位: <http://example.com/api/?q=京都府>
 - 都道府県市町村単位: <http://example.com/api/?q=都道府県名(~県まで含む)>
 
-応答すべきJson形式はそれぞれ以下を参考にする．
+#### API経由パラメータ付き(dynamic_param)
 
-- 日本全体: [`japan_data.json`](./src/assets/mockup_data/japan_data.json)
-- 各都道府県: [`京都府.json`](./src/assets/mockup_data/京都府.json)
+`Mode: "dynamic_param"`とenv用のjsファイルで定義することで，JSONを返すAPI_ENDPOINTに応じたクエリを含むURLを参照して可視化する．
+このモードではパラメータ（商品ID等）をhtmlのdata属性`data-paramid`に経由で設定する．
+
+EX: `index.html`
+
+```html
+<!DOCTYPE html>
+<html>
+<body>
+    <div id="chartdiv" data-paramid="XXXXXXX">
+    <script src="index.js"></script>
+</body>
+</html>
+```
+
+EX: `./dev.js`
+
+```js
+export default {
+    MODE: "dynamic_param",
+    API_ENDPOINT: "http://example.com/api/"
+}
+```
+
+参照するURLの形式は以下になる．
+
+- 日本全体: <http://example.com/api/?q=japan_data&id=XXXXXXX>
+- 京都府市町村単位: <http://example.com/api/?q=京都府&id=XXXXXXX>
+- 都道府県市町村単位: <http://example.com/api/?q=都道府県名(~県まで含む)&id=XXXXXXX>
+
+### 対応JSON形式
 
 key`id`に都道府県名や市町村名(**都道府県名から始める**)を入れ，value`value`に任意の数値を入れたJsonであれば良い．
 
@@ -97,22 +198,6 @@ key`id`に都道府県名や市町村名(**都道府県名から始める**)を�
     ...
 ]
 
-```
-
-#### Build:prd
-
-`./dist`以下にビルド
-
-```bash
-npm run build
-```
-
-#### Serve:prd
-
-Production用のenvを読み込んだwebpack-dev-serverを起動
-
-```bash
-npm run serve:prd
 ```
 
 ## 都道府県別市町村単位GeoJsonの取得手順書
