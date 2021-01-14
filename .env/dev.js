@@ -1,4 +1,4 @@
 export default {
-    MODE: "dev",
+    MODE: "static",
     API_ENDPOINT: "./assets/mockup_data/"
 }

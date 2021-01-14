@@ -10,6 +10,9 @@ import japan from "./util_js/japan_geodata"
 let map = am4core.create("chartdiv", am4maps.MapChart);
 map.projection = new am4maps.projections.Miller();
 
+// パラメータ(param_id)を取得
+let paramid = document.getElementById("chartdiv").dataset.paramid;
+
 // 日本地図: 読み込み
 let JapanSeries = map.series.push(new am4maps.MapPolygonSeries());
 JapanSeries.useGeodata = true;
@@ -75,6 +78,7 @@ CitySeries.heatRules.push({
     "min": am4core.color("#ffd194"),
     "max": am4core.color("#70e1f5"),
 });
+
 let CityHeatLegend = map.createChild(am4maps.HeatLegend);
 CityHeatLegend.series = CitySeries;
 CityHeatLegend.align = "right";
@@ -239,11 +243,17 @@ function reset_map() {
  */
 function get_api_url(query) {
     let api_url;
-    if (userEnv.MODE === "dev") {
+    if (userEnv.MODE === "static") {
         api_url = userEnv.API_ENDPOINT + query + ".json";
-    } else {
+    } else if (userEnv.MODE === "dynamic_noparam") {
         api_url = userEnv.API_ENDPOINT + "?q=" + query;
+    } else if (userEnv.MODE === "dynamic_param") {
+        api_url = userEnv.API_ENDPOINT + "?q=" + query + "&id=" + paramid;
+    } else {
+        // envでモードが設定されていないのでエラーを投げます．
+        throw "Mode is not defined in an env file."
     }
+    console.log(api_url);
     return api_url;
 }
 
