@@ -59,7 +59,8 @@ EX: `prd.js`
 ```js
 export default {
     MODE: "dynamic_noparam",
-    API_ENDPOINT: "http://example.com/api/"
+    API_ENDPOINT: "http://example.com/api/",
+    MAP_DATA: "http://example.com/data/mapdata/"
 }
 ```
 
@@ -85,8 +86,10 @@ npm run serve:prd
 2. `npm run build`
 3. `./dist/`以下のファイルをすべてサーバにアップロード
    > `index.html`は確認用のページなどで不要であれば消して良い．
+   >
    > ここでは例として，`http://example.com/heatmap/`以下にアップロードとしたとする．
    >
+   > この際`./dist/assets/map_data/`のサーバ上でのPathは`http://example.com/heatmap/assets/map_data/`となるので，`./.env/prd.js`の`MAP_DATA: "http://example.com/heatmap/assets/map_data/"`として設定する．
 4. 対象のページに以下を追加する
 
 EX: target.html
@@ -97,7 +100,7 @@ EX: target.html
 <body>
     <!-- #################### insert start ################## -->
     <div id="chartdiv" data-paramid="XXXXXXX">
-    <script src="index.js"></script>
+    <script src="http://example.com/heatmap/index.js"></script>
     <!-- #################### insert end ################## -->
 </body>
 </html>
@@ -116,7 +119,8 @@ EX: `./dev.js`
 ```js
 export default {
     MODE: "static",
-    API_ENDPOINT: "http://example.com/data/"
+    API_ENDPOINT: "http://example.com/data/",
+    MAP_DATA: "http://example.com/data/map_data/"
 }
 ```
 
@@ -125,7 +129,9 @@ export default {
 参照するURLの形式は以下になる．
 
 - 日本全体: <http://example.com/data/japan_data.json>
-- 各都道府県: <http://example.com/data/京都府.json>
+- 京都府市町村単位: <http://example.com/data/京都府.json>
+- 兵庫県市町村単位: <http://example.com/data/兵庫県.json>
+- 都道府県市町村単位: <http://example.com/data/都道府県名.json>
 
 #### API経由(dynamic_noparam)
 
@@ -137,7 +143,8 @@ EX: `./dev.js`
 ```js
 export default {
     MODE: "dynamic_noparam",
-    API_ENDPOINT: "http://example.com/api/"
+    API_ENDPOINT: "http://example.com/api/",
+    MAP_DATA: "http://example.com/data/map_data/"
 }
 ```
 
@@ -145,6 +152,7 @@ export default {
 
 - 日本全体: <http://example.com/api/?q=japan_data>
 - 京都府市町村単位: <http://example.com/api/?q=京都府>
+- 兵庫県市町村単位: <http://example.com/api/?q=兵庫県>
 - 都道府県市町村単位: <http://example.com/api/?q=都道府県名(~県まで含む)>
 
 #### API経由パラメータ付き(dynamic_param)
@@ -169,7 +177,8 @@ EX: `./dev.js`
 ```js
 export default {
     MODE: "dynamic_param",
-    API_ENDPOINT: "http://example.com/api/"
+    API_ENDPOINT: "http://example.com/api/",
+    MAP_DATA: "http://example.com/data/map_data/"
 }
 ```
 
@@ -177,9 +186,12 @@ export default {
 
 - 日本全体: <http://example.com/api/?q=japan_data&id=XXXXXXX>
 - 京都府市町村単位: <http://example.com/api/?q=京都府&id=XXXXXXX>
+- 兵庫県市町村単位: <http://example.com/api/?q=兵庫県&id=XXXXXXX>
 - 都道府県市町村単位: <http://example.com/api/?q=都道府県名(~県まで含む)&id=XXXXXXX>
 
 ### 対応JSON形式
+
+[`./src/assets/mockup_data/`](./src/assets/mockup_data/)以下のファイルが参考になる．
 
 key`id`に都道府県名や市町村名(**都道府県名から始める**)を入れ，value`value`に任意の数値を入れたJsonであれば良い．
 

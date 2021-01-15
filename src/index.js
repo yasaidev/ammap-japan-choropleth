@@ -123,7 +123,7 @@ JapanPolygon.events.on("hit", function (ev) {
     if (pref_name) {
         ev.target.isHover = false;
         // 市町村別地図: 地図データ読み込み
-        CitySeries.geodataSource.url = "./assets/map_data/" + pref_name + ".json";
+        CitySeries.geodataSource.url = userEnv.MAP_DATA + pref_name + ".json";
         CitySeries.geodataSource.load();
 
         // 市町村別地図: 配送量データ読み込み
