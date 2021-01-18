@@ -172,17 +172,6 @@ JapanSeries.mapPolygons.template.events.on("ready", function (ev) {
     map.homeGeoPoint = userlocation
     map.homeZoomLevel = 8;
     map.goHome(500);
-
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            (postion) => {
-                userlocation.latitude = postion.coords.latitude;
-                userlocation.longitude = postion.coords.longitude;
-                map.homeGeoPoint = userlocation
-                map.homeZoomLevel = 8;
-                map.goHome(500);
-            })
-    }
 });
 
 // ホームボタンの追加
@@ -191,14 +180,28 @@ const button = map.chartContainer.createChild(am4core.Button);
 button.padding(5, 5, 5, 5);
 button.align = "right";
 button.valign = "bottom";
-button.marginRight = 35;
+button.marginRight = am4core.percent(4);
 button.events.on("hit", function () {
     reset_map()
-    map.goHome();
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (postion) => {
+                map.homeGeoPoint = {
+                    latitude: postion.coords.latitude,
+                    longitude: postion.coords.longitude
+                }
+                map.homeZoomLevel = 8;
+                map.goHome(500);
+            })
+    } else {
+        map.goHome();
+    }
 });
 
 button.icon = new am4core.Sprite();
-button.icon.path = "M16,8 L14,8 L14,16 L10,16 L10,10 L6,10 L6,16 L2,16 L2,8 L0,8 L8,0 L16,8 Z M16,8";
+// https://material.io/resources/icons/?search=location&icon=gps_fixed&style=baseline
+button.icon.path = "M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z";
 
 /**
  * ZoomとPanをinputに応じて有効/無効化する．
