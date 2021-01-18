@@ -25,3 +25,12 @@ geojsonのFIDを簡素化して、市町村名だけのshort_nameのpropertyを�
 ### dependency
 
 - Python = 3.8~
+
+## [get_all_fid](get_all_fid.py)
+
+geojsonのFID一覧を取得して，CSVに書き出す．
+
+### dependency
+
+- Python = 3.8~
+- Pandas
