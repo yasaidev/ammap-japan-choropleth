@@ -94,7 +94,7 @@ CityHeatLegend.valueAxis.fontSize = 9;
 CityHeatLegend.valueAxis.logarithmic = true;
 CityHeatLegend.hide();
 
-
+// 市町村別地図: 市町村別地図が読み込みが終わったら日本全体地図を閉じて，市町村別地図だけを表示
 CitySeries.geodataSource.events.on("done", function (ev) {
     JapanSeries.hide();
     JapanHeatLegend.hide();
@@ -126,9 +126,17 @@ JapanPolygon.events.on("hit", function (ev) {
         CitySeries.geodataSource.url = userEnv.MAP_DATA + pref_name + ".json";
         CitySeries.geodataSource.load();
 
-        // 市町村別地図: 配送量データ読み込み
+        // 市町村別地図: 数量データ読み込み
         CitySeries.dataSource.url = get_api_url(pref_name)
         CitySeries.dataSource.load();
+
+        // 市町村別地図: 数量データのデフォルト値を設定
+        // https://www.amcharts.com/docs/v4/tutorials/manipulating-chart-data/
+        CitySeries.events.on("beforedatavalidated", function (ev) {
+            ev.target.data.forEach(obj => obj.value = obj.value === undefined ? 0 : obj.value)
+        });
+
+        // 市町村別地図: 数量データ読み込み時のエラーハンドリング
         CitySeries.dataSource.events.on("error", function (ev) {
             // デフォルトのエラーモーダルを閉じる
             map.modal.close();
