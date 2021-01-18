@@ -3,6 +3,7 @@ import re
 import glob
 import os
 from collections import OrderedDict
+from types import ClassMethodDescriptorType
 
 GEOJSON_PATH = "./src/assets/map_data/"
 SAVE_PATH = "./editted_geojson/"
@@ -15,26 +16,14 @@ for geojson_path in glob.glob(GEOJSON_PATH+"*.json"):
         geojson = json.load(f, object_pairs_hook=OrderedDict)
 
     for feature in geojson["features"]:
-        print(feature["id"])
-        if("京都府" in feature["id"]):
-            regex = r"(?<=府|郡).*[市|町|村|区]"
-        else:
-            regex = r"(?<=都|道|府|県|郡).*[市|町|村|区]"
+        try:
+            short_name = feature["properties"]["N03_004"]
+        except KeyError:
+            short_name = feature["properties"]["N03_003"]
 
-        try:
-            first_regexed = re.findall(regex, feature["id"])[0]
-        except:
-            first_regexed = feature["id"]
-        
-        try:
-            secound_regexed = re.findall(regex, first_regexed)
-        except:
-            secound_regexed = 0
-        
-        shrot_name = secound_regexed[0] if bool(
-            secound_regexed) else first_regexed
-        print(shrot_name)
-        feature["properties"]["name"] = shrot_name
+        print(short_name)
+        feature["properties"]["name"] = short_name
+        feature["id"] = feature["properties"]["N03_001"] + short_name
 
     with open(SAVE_PATH+os.path.basename(geojson_path), "w", encoding="utf-8_sig") as f:
         json.dump(geojson, f, ensure_ascii=False)
