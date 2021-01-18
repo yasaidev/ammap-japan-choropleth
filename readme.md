@@ -194,6 +194,9 @@ export default {
 [`./src/assets/mockup_data/`](./src/assets/mockup_data/)以下のファイルが参考になる．
 
 key`id`に都道府県名や市町村名(**都道府県名から始める**)を入れ，value`value`に任意の数値を入れたJsonであれば良い．
+> 京都府の市町村の数値データであれば，`{"id":"京都府京都市","value": 100}`となる．
+
+具体的なIDについては[`ALL_Fid_list.csv`](All_Fid_list.csv)で確認可能である．
 
 **注意点として**，valueが0の都市や都道府県に対しても，`id`と`"value": 0`を設定する必要がある．
 
