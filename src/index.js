@@ -14,7 +14,7 @@ map.projection = new am4maps.projections.Miller();
 const HeatmapColor = {
     "max": userEnv.MAX_COLOR === undefined ? "#51AA12" : userEnv.MAX_COLOR,
     "min": userEnv.MIN_COLOR === undefined ? "#e4f1d9" : userEnv.MIN_COLOR,
-    "hover": userEnv.HOVER_COLOR === undefined ? "#2D5E0A" : userEnv.MIN_COLOR,
+    "hover": userEnv.HOVER_COLOR === undefined ? "#2D5E0A" : userEnv.HOVER_COLOR,
 }
 // パラメータ(param_id)を取得
 let paramid = document.getElementById("chartdiv").dataset.paramid;
