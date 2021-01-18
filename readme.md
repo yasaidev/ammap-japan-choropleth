@@ -215,6 +215,28 @@ key`id`に都道府県名や市町村名(**都道府県名から始める**)を�
 
 ```
 
+### ヒートマップの色
+
+env用のjsファイルで以下の様に定義する．設定しない場合はデフォルト値が使用される．
+EX: `./dev.js`
+
+```js
+export default {
+    MODE: "dynamic_param",
+    API_ENDPOINT: "http://example.com/api/",
+    MAP_DATA: "http://example.com/data/map_data/",
+    MAX_COLOR: "#161821",
+    MIN_COLOR: "#FFFFFF",
+    HOVER_COLOR:"#FF0000"
+}
+```
+
+|             | デフォルト値                                                          |
+| ----------- | --------------------------------------------------------------------- |
+| MIX_COLOR   | ![](https://via.placeholder.com/16/f1f8e9/FFFFFF/?text=%20) `#f1f8e9` |
+| MAX_COLOR   | ![](https://via.placeholder.com/16/51AA12/FFFFFF/?text=%20) `#51AA12` |
+| HOVER_COLOR | ![](https://via.placeholder.com/16/2D5E0A/FFFFFF/?text=%20) `#2D5E0A` |
+
 ## 都道府県別市町村単位GeoJsonの取得手順書
 
 ### Tools

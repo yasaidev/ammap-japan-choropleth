@@ -10,6 +10,12 @@ import japan from "./util_js/japan_geodata"
 let map = am4core.create("chartdiv", am4maps.MapChart);
 map.projection = new am4maps.projections.Miller();
 
+// 色設定
+const HeatmapColor = {
+    "max": userEnv.MAX_COLOR === undefined ? "#51AA12" : userEnv.MAX_COLOR,
+    "min": userEnv.MIN_COLOR === undefined ? "#f1f8e9" : userEnv.MIN_COLOR,
+    "hover": userEnv.HOVER_COLOR === undefined ? "#2D5E0A" : userEnv.MIN_COLOR,
+}
 // パラメータ(param_id)を取得
 let paramid = document.getElementById("chartdiv").dataset.paramid;
 
@@ -23,18 +29,18 @@ let JapanPolygon = JapanSeries.mapPolygons.template;
 
 // 日本地図: ツールチップ
 JapanPolygon.tooltipText = "{name}: {value}";
-JapanPolygon.fill = am4core.color("#74B266");
+JapanPolygon.fill = am4core.color(HeatmapColor.hover);
 
 // 日本地図: ホバー
 let JapanHs = JapanPolygon.states.create("hover");
-JapanHs.properties.fill = am4core.color("#ff6e7f");
+JapanHs.properties.fill = am4core.color(HeatmapColor.hover);
 
 // 日本地図: ヒートマップ
 JapanSeries.heatRules.push({
     "property": "fill",
     "target": JapanPolygon,
-    "min": am4core.color("#ffd194"),
-    "max": am4core.color("#70e1f5"),
+    "min": am4core.color(HeatmapColor.min),
+    "max": am4core.color(HeatmapColor.max),
 });
 
 let JapanHeatLegend = map.createChild(am4maps.HeatLegend);
@@ -65,18 +71,18 @@ let CityPolygon = CitySeries.mapPolygons.template;
 
 // 市町村別地図: ツールチップ
 CityPolygon.tooltipText = "{name}: {value}";
-CityPolygon.fill = am4core.color("#74B266");
+CityPolygon.fill = am4core.color(HeatmapColor.hover);
 
 // 市町村別地図: ホバー
 let CityHs = CityPolygon.states.create("hover");
-CityHs.properties.fill = am4core.color("#ff6e7f");
+CityHs.properties.fill = am4core.color(HeatmapColor.hover);
 
 // 市町村別地図: ヒートマップ
 CitySeries.heatRules.push({
     "property": "fill",
     "target": CityPolygon,
-    "min": am4core.color("#ffd194"),
-    "max": am4core.color("#70e1f5"),
+    "min": am4core.color(HeatmapColor.min),
+    "max": am4core.color(HeatmapColor.max),
 });
 
 let CityHeatLegend = map.createChild(am4maps.HeatLegend);
