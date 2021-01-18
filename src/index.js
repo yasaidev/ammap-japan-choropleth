@@ -13,7 +13,7 @@ map.projection = new am4maps.projections.Miller();
 // 色設定
 const HeatmapColor = {
     "max": userEnv.MAX_COLOR === undefined ? "#51AA12" : userEnv.MAX_COLOR,
-    "min": userEnv.MIN_COLOR === undefined ? "#f1f8e9" : userEnv.MIN_COLOR,
+    "min": userEnv.MIN_COLOR === undefined ? "#e4f1d9" : userEnv.MIN_COLOR,
     "hover": userEnv.HOVER_COLOR === undefined ? "#2D5E0A" : userEnv.MIN_COLOR,
 }
 // パラメータ(param_id)を取得
@@ -46,7 +46,6 @@ JapanSeries.heatRules.push({
 let JapanHeatLegend = map.createChild(am4maps.HeatLegend);
 JapanHeatLegend.series = JapanSeries;
 JapanHeatLegend.align = "right";
-JapanHeatLegend.valign = "bottom";
 JapanHeatLegend.height = am4core.percent(80);
 JapanHeatLegend.orientation = "vertical";
 JapanHeatLegend.valign = "middle";
@@ -55,7 +54,7 @@ JapanHeatLegend.valueAxis.renderer.opposite = true;
 JapanHeatLegend.valueAxis.renderer.dx = - 25;
 JapanHeatLegend.valueAxis.strictMinMax = false;
 JapanHeatLegend.valueAxis.fontSize = 9;
-JapanHeatLegend.valueAxis.logarithmic = true;
+JapanHeatLegend.valueAxis.logarithmic = false;
 
 // 日本地図: 配送量データ読み込み
 JapanSeries.dataSource.url = get_api_url("japan_data");
@@ -88,7 +87,6 @@ CitySeries.heatRules.push({
 let CityHeatLegend = map.createChild(am4maps.HeatLegend);
 CityHeatLegend.series = CitySeries;
 CityHeatLegend.align = "right";
-CityHeatLegend.valign = "bottom";
 CityHeatLegend.height = am4core.percent(80);
 CityHeatLegend.orientation = "vertical";
 CityHeatLegend.valign = "middle";
@@ -97,7 +95,7 @@ CityHeatLegend.valueAxis.renderer.opposite = true;
 CityHeatLegend.valueAxis.renderer.dx = - 25;
 CityHeatLegend.valueAxis.strictMinMax = false;
 CityHeatLegend.valueAxis.fontSize = 9;
-CityHeatLegend.valueAxis.logarithmic = true;
+CityHeatLegend.valueAxis.logarithmic = false;
 CityHeatLegend.hide();
 
 // 市町村別地図: 市町村別地図が読み込みが終わったら日本全体地図を閉じて，市町村別地図だけを表示

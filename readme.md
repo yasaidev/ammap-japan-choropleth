@@ -233,7 +233,7 @@ export default {
 
 |             | デフォルト値                                                          |
 | ----------- | --------------------------------------------------------------------- |
-| MIX_COLOR   | ![](https://via.placeholder.com/16/f1f8e9/FFFFFF/?text=%20) `#f1f8e9` |
+| MIX_COLOR   | ![](https://via.placeholder.com/16/e4f1d9/FFFFFF/?text=%20) `#e4f1d9` |
 | MAX_COLOR   | ![](https://via.placeholder.com/16/51AA12/FFFFFF/?text=%20) `#51AA12` |
 | HOVER_COLOR | ![](https://via.placeholder.com/16/2D5E0A/FFFFFF/?text=%20) `#2D5E0A` |
 
