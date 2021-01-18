@@ -7,13 +7,13 @@
         "@babel/plugin-syntax-dynamic-import": "^7.2.0",
         "@babel/preset-env": "^7.4.4",
         "babel-loader": "^8.0.5",
-        "copy-webpack-plugin": "^6.2.1",
+        "copy-webpack-plugin": "^6.4.1",
         "cross-env": "^7.0.3",
-        "html-webpack-plugin": "^4.5.0",
+        "html-webpack-plugin": "^4.5.1",
         "source-map-loader": "0.2.3",
-        "webpack": "^4.6.0",
+        "webpack": "^4.46.0",
         "webpack-cli": "^3.1.2",
-        "webpack-dev-server": "^3.11.0",
+        "webpack-dev-server": "^3.11.2",
         "write-file-webpack-plugin": "^4.5.1"
     },
     "scripts": {
@@ -25,7 +25,7 @@
     "dependencies": {
         "@amcharts/amcharts4-geodata": "^4.1.19",
         "@types/core-js": "^2.5.4",
-        "core-js": "^3.8.1",
+        "core-js": "^3.8.2",
         "regenerator-runtime": "^0.13.7"
     }
 }
