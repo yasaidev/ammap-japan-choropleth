@@ -4,6 +4,12 @@
 
 日本全国を最小市町村単位で色付けするコロプレス図で表示するJSコード．
 
+## Special Thanks to [Anamorphosis Networks Co., Ltd.](https://anamorphosis.net/)
+
+本成果物は[Anamorphosis Networks社](https://anamorphosis.net/)のインターンで作成しました.
+
+業務の一環で作成したコードの公開を許可していただき誠にありがとうございます．
+
 ## Demo
 
 <https://older4.github.io/ammap-japan-choropleth/>
@@ -11,7 +17,7 @@
 
 ## Tech
 
-[Amchart4](https://www.amcharts.com/docs/v4/chart-types/map/)が提供するMap機能を用いて，実装．
+[Amchart4](https://www.amcharts.com/docs/v4/chart-types/map/)が提供するMap機能を用いて実装．
 
 各地図は[Geoshapeリポジトリ](https://geoshape.ex.nii.ac.jp/)から入手したTopoJSONをGeoJSONに変換して利用．
 
@@ -236,6 +242,10 @@ export default {
 | MIX_COLOR   | ![](https://via.placeholder.com/16/e4f1d9/FFFFFF/?text=%20) `#e4f1d9` |
 | MAX_COLOR   | ![](https://via.placeholder.com/16/51AA12/FFFFFF/?text=%20) `#51AA12` |
 | HOVER_COLOR | ![](https://via.placeholder.com/16/2D5E0A/FFFFFF/?text=%20) `#2D5E0A` |
+
+### License
+
+GPL v3
 
 ## 都道府県別市町村単位GeoJsonの取得手順書
 
