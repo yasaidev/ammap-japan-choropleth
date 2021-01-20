@@ -13,6 +13,7 @@
 ## Demo
 
 <https://older4.github.io/ammap-japan-choropleth/>
+
 ![demo](./readme-img/demo.gif)
 
 ## Tech
