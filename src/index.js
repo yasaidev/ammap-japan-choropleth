@@ -113,7 +113,7 @@ JapanPolygon.events.on("hit", function (ev) {
     let virtual_long = ev.target.dataItem.dataContext.virtual_long;
 
     if (virtual_lati !== undefined) {
-        console.log(virtual_lati);
+        // console.log(virtual_lati);
         map.zoomToGeoPoint({
             latitude: virtual_lati,
             longitude: virtual_long
@@ -269,7 +269,7 @@ function get_api_url(query) {
         // envでモードが設定されていないのでエラーを投げます．
         throw "Mode is not defined in an env file."
     }
-    console.log(api_url);
+    // console.log(api_url);
     return api_url;
 }
 
