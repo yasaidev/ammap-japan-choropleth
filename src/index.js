@@ -157,6 +157,7 @@ JapanPolygon.events.on("hit", function (ev) {
 // TODO: デザインの改良
 const back = map.createChild(am4core.ZoomOutButton);
 back.align = "right";
+back.marginRight = am4core.percent(10);
 back.hide();
 back.events.on("hit", function (ev) {
     reset_map();
@@ -192,7 +193,7 @@ const button = map.chartContainer.createChild(am4core.Button);
 button.padding(5, 5, 5, 5);
 button.align = "right";
 button.valign = "bottom";
-button.marginRight = am4core.percent(4);
+button.marginRight = am4core.percent(10);
 button.events.on("hit", function () {
     reset_map()
 
