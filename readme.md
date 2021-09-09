@@ -12,7 +12,7 @@
 
 ## Demo
 
-<https://older4.github.io/ammap-japan-choropleth/>
+<https://yasaidev.github.io/ammap-japan-choropleth/>
 
 ![demo](./readme-img/demo.gif)
 
@@ -33,7 +33,7 @@
 ### Init
 
 ```bash
-git clone https://github.com/older4/ammap-testing.git
+git clone https://github.com/yasaidev/ammap-testing.git
 npm install
 ```
 
